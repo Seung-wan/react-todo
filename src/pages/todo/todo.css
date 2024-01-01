@@ -1,0 +1,11 @@
+.todo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-container__title {
+  font-size: 32px;
+  margin-top: 32px;
+}
