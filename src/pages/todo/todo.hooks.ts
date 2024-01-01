@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { ALERT_MESSAGE } from '@/constants';
 
@@ -8,6 +8,8 @@ let id = 1;
 
 export default function useTodo() {
   const [todos, setTodos] = useState<Todo[]>([]);
+
+  const todosCount = useMemo(() => todos.length, [todos]);
 
   const addTodo = useCallback(
     (content: string) => {
@@ -29,13 +31,30 @@ export default function useTodo() {
     [todos]
   );
 
+  const updateTodo = useCallback((id: number, newContent: string) => {
+    setTodos((prev) =>
+      prev.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            content: newContent,
+          };
+        }
+
+        return todo;
+      })
+    );
+  }, []);
+
   const deleteTodo = useCallback((id: number) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }, []);
 
   return {
     todos,
+    todosCount,
     addTodo,
+    updateTodo,
     deleteTodo,
   };
 }
