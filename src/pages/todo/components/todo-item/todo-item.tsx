@@ -23,6 +23,10 @@ export default function TodoItem({
     handleChangeNewContent,
   } = useTodoItem(content);
 
+  const handleClickOpenEditable = () => {
+    openEditable();
+  };
+
   const handleClickUpdate = () => {
     onClickUpdate(id, newContent);
     setNewContent(newContent);
@@ -38,15 +42,18 @@ export default function TodoItem({
     <li>
       <input type="text" value={newContent} onChange={handleChangeNewContent} />
       <button onClick={handleClickUpdate} type="button">
-        수정
+        변경
       </button>
       <button onClick={handleClickCancel} type="button">
         취소
       </button>
     </li>
   ) : (
-    <li onClick={openEditable}>
+    <li>
       <span>{content}</span>
+      <button onClick={handleClickOpenEditable} type="button">
+        수정
+      </button>
       <button onClick={() => onClickDelete(id)} type="button">
         삭제
       </button>
