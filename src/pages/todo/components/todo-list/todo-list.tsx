@@ -1,4 +1,7 @@
+import { useMemo } from 'react';
+
 import { Todo } from '../../types';
+import { TodoItem } from '../todo-item';
 
 /**
  * Props로 setTodos, deleteTodo, onClickDelete 중에 어떤 함수를 받을 것인가?
@@ -11,22 +14,32 @@ import { Todo } from '../../types';
 interface Props {
   todos: Todo[];
   onClickDelete: (id: number) => void;
+  onClickUpdate: (id: number, newContent: string) => void;
 }
 
-export default function TodoList({ todos, onClickDelete }: Props) {
+export default function TodoList({
+  todos,
+  onClickUpdate,
+  onClickDelete,
+}: Props) {
+  const todosCount = useMemo(() => todos.length, [todos]);
+
   if (todos.length === 0) {
     return <div>할일을 추가해주세요.</div>;
   }
 
   return (
     <ul>
+      <div>할일 개수: {todosCount}</div>
+
       {todos.map(({ id, content }) => (
-        <li key={id}>
-          <span>{content}</span>
-          <button onClick={() => onClickDelete(id)} type="button">
-            삭제
-          </button>
-        </li>
+        <TodoItem
+          key={id}
+          id={id}
+          content={content}
+          onClickUpdate={onClickUpdate}
+          onClickDelete={onClickDelete}
+        />
       ))}
     </ul>
   );

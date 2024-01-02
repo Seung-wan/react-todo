@@ -7,7 +7,11 @@ import useTodo from './todo.hooks';
 import './todo.css';
 
 export default function Todo() {
-  const { todos, addTodo, deleteTodo } = useTodo();
+  const { todos, addTodo, updateTodo, deleteTodo } = useTodo();
+
+  const handleClickUpdate = (id: number, newContent: string) => {
+    updateTodo(id, newContent);
+  };
 
   const handleClickDelete = (id: number) => {
     deleteTodo(id);
@@ -19,7 +23,11 @@ export default function Todo() {
       <Spacing size={16} />
       <TodoForm addTodo={addTodo} />
       <Spacing size={16} />
-      <TodoList todos={todos} onClickDelete={handleClickDelete} />
+      <TodoList
+        todos={todos}
+        onClickUpdate={handleClickUpdate}
+        onClickDelete={handleClickDelete}
+      />
     </div>
   );
 }
