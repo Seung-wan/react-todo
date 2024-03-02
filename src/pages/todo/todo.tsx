@@ -3,10 +3,19 @@ import { Spacing } from '@/components/common/spacing';
 import { TodoForm, TodoList } from './components';
 
 import useTodo from './todo.hooks';
+
 import './todo.css';
 
 export default function Todo() {
-  const { todos, addTodo } = useTodo();
+  const { todos, addTodo, updateTodo, deleteTodo } = useTodo();
+
+  const handleClickUpdate = (id: number, newContent: string) => {
+    updateTodo(id, newContent);
+  };
+
+  const handleClickDelete = (id: number) => {
+    deleteTodo(id);
+  };
 
   return (
     <div className="todo-container">
@@ -14,7 +23,11 @@ export default function Todo() {
       <Spacing size={16} />
       <TodoForm addTodo={addTodo} />
       <Spacing size={16} />
-      <TodoList todos={todos} />
+      <TodoList
+        todos={todos}
+        onClickUpdate={handleClickUpdate}
+        onClickDelete={handleClickDelete}
+      />
     </div>
   );
 }

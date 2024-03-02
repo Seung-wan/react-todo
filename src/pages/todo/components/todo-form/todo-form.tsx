@@ -2,11 +2,10 @@ import { FormEvent, useCallback } from 'react';
 
 import useTodoForm from './todo-form.hooks';
 
-import './todo-form.css';
-
 interface Props {
   addTodo: (todo: string) => void;
 }
+
 export default function TodoForm({ addTodo }: Props) {
   const { todo, handleChangeTodo, resetTodo } = useTodoForm();
 
